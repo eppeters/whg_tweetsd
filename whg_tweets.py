@@ -1,5 +1,5 @@
 import tweepy
-from time import sleep
+from time import sleep, localtime, strftime
 
 ### Twitter authorization
 auth = tweepy.OAuthHandler('GW6ygIXuDjY09UysWCWwl3SYz', 'GtidKGLHvMAXMEs2p7Vict6HE4Z2p7gAnS2P7BQisEqNYa7kuC')
@@ -10,7 +10,7 @@ interval_secs = 60 * 30 # 30 minutes
 wju = '40.069562,-80.69173' # Wheeling Jesuit University's long/lat
 distance = '60mi' # roughly to Pittsburgh
 geo = wju + ',' + distance
-last_checked_id = 526379098805768194
+last_checked_id = 527141908095963136
 keyword = 'wheeling, wv'
 lang = 'en'
 
@@ -25,6 +25,9 @@ while True:
 					since_id = last_checked_id, geocode = geo)
 		else:
 			posts = twitter.search(keyword, lang, geocode = geo)
+		
+		if len(posts) == 0:
+			print "STATUS: NO MATCHES FOUND for keyword ", keyword
 	except tweepy.TweepError as e:
 		print e
 
@@ -40,6 +43,6 @@ while True:
 		last_checked_id = post.id
 		print "LAST_CHECKED_ID: last_checked_id = ", last_checked_id
 
-	print "SLEEP: Sleeping for ", interval_secs, " seconds"
-	#sleep(interval_secs)
+	print "SLEEP: Sleeping for ", interval_secs, " seconds at", strftime("%Y-%m-%d %H:%M:%S", localtime())
+	sleep(interval_secs)
 	print "SLEEP: Finished sleeping. Restarting search."
