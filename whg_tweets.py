@@ -1,48 +1,34 @@
 import tweepy
 from time import sleep, localtime, strftime
+import sys
+
+### User-defined modules
+from lib.config_parser import Config
+from lib.tweet_list import Tweets
 
 ### Twitter authorization
 auth = tweepy.OAuthHandler('GW6ygIXuDjY09UysWCWwl3SYz', 'GtidKGLHvMAXMEs2p7Vict6HE4Z2p7gAnS2P7BQisEqNYa7kuC')
 auth.set_access_token('2847055289-pn4f6qKRV2OWUoQIjyBJZu0GUyd5w0D13OB1Bl5', 'hZWi3AHudKgFrLFJ8a9dgL12ds5Bvpt6zh9ZBHvcUdBzR')
 
 ### Configuration
-interval_secs = 60 * 30 # 30 minutes
-wju = '40.069562,-80.69173' # Wheeling Jesuit University's long/lat
-distance = '60mi' # roughly to Pittsburgh
-geo = wju + ',' + distance
-last_checked_id = 527141908095963136
-keyword = 'wheeling, wv'
-lang = 'en'
+config = Config('/home/eddie/dev/wheeling_tweets/config/config.json.dist').values
 
 twitter = tweepy.API(auth)
 
+tweets = Tweets(twitter,
+    config['location'],
+    config['last_checked_id'],
+    config['keywords'],
+    excluded = config['excluded_uids'])
+
 while True:
-	posts = []
-	try:
-		if (last_checked_id != None):
-			print "LAST_CHECKED_ID: last_checked_id = ", last_checked_id
-			posts = twitter.search(keyword, lang,
-					since_id = last_checked_id, geocode = geo)
-		else:
-			posts = twitter.search(keyword, lang, geocode = geo)
-		
-		if len(posts) == 0:
-			print "STATUS: NO MATCHES FOUND for keyword ", keyword
-	except tweepy.TweepError as e:
-		print e
+  for tweet in tweets.get_ids():
+    try:
+      result = twitter.retweet(tweet)
+      print "STATUS: Tweeted!"
+    except tweepy.TweepError as e:
+      sys.stderr.write(str(e) + "\n")
 
-	for post in posts:
-		try:
-			result = twitter.retweet(post.id)
-			print "RESULT: ", result
-		except tweepy.TweepError as e:
-			print "ERROR: ", e
-			print "ERROR: Next post is the error'd one."
-		print "POST INFORMATION: id = ", post.id, "text = ", post.text.encode('utf8')
-		print "POST INFORMATION: ", post
-		last_checked_id = post.id
-		print "LAST_CHECKED_ID: last_checked_id = ", last_checked_id
-
-	print "SLEEP: Sleeping for ", interval_secs, " seconds at", strftime("%Y-%m-%d %H:%M:%S", localtime())
-	sleep(interval_secs)
-	print "SLEEP: Finished sleeping. Restarting search."
+  print "SLEEP: Sleeping for ", config['interval_secs'], " seconds at", strftime("%Y-%m-%d %H:%M:%S", localtime())
+  sleep(config['interval_secs'])
+  print "SLEEP: Finished sleeping. Restarting search."
