@@ -11,7 +11,7 @@ auth = tweepy.OAuthHandler('GW6ygIXuDjY09UysWCWwl3SYz', 'GtidKGLHvMAXMEs2p7Vict6
 auth.set_access_token('2847055289-pn4f6qKRV2OWUoQIjyBJZu0GUyd5w0D13OB1Bl5', 'hZWi3AHudKgFrLFJ8a9dgL12ds5Bvpt6zh9ZBHvcUdBzR')
 
 ### Configuration
-config = Config('/home/eddie/dev/wheeling_tweets/config/config.json.dist').values
+config = Config('/etc/opt/whg_tweetsd/config.json').values
 
 twitter = tweepy.API(auth)
 
