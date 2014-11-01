@@ -1,2 +1,28 @@
 {
+  "interval_secs": 1800,
+  "location": "40.069562,-80.69173",
+  "last_checked_id": 527141908095963136,
+  "language": "en",
+  "keywords": [
+    {"keyword": "Wheeling, WV", "distance": "60mi"},
+    {"keyword": "Wheeling Twitter Bot", "distance": "60mi"},
+    {"keyword": "Wheeling Tweets", "distance": "10mi"},
+    {"keyword": "Wheeling", "distance": "10mi"},
+    {"keyword": "East Wheeling", "distance": "30mi"},
+    {"keyword": "North Wheeling", "distance": "30mi"},
+    {"keyword": "South Wheeling", "distance": "30mi"},
+    {"keyword": "Downtown Wheeling", "distance": "30mi"},
+    {"keyword": "Down Town Wheeling", "distance": "15mi"},
+    {"keyword": "Wheeling Island", "distance": "10mi"},
+    {"keyword": "Suspension Bridge", "distance": "10mi"},
+    {"keyword": "Wheeling Heritage Port", "distance": "30mi"},
+    {"keyword": "WJU", "distance": "30mi"},
+    {"keyword": "Wheeling Jesuit University", "distance": "60mi"},
+    {"keyword": "Market Street Now", "distance": "20mi"},
+    {"keyword": "Centre Market", "distance": "10mi"},
+    {"keyword": "Center Market", "distance": "10mi"},
+    {"keyword": "Wheeling Tunnel", "distance": "10mi"},
+    {"keyword": "Wheeling Tunnels", "distance": "20mi"}
+  ],
+  "excluded_uids": [2820409627]
 }
