@@ -1,6 +1,7 @@
 from sortedcontainers import SortedSet
 import tweepy
 import sys
+from time import localtime, strftime
 
 class Tweets():
 
@@ -41,7 +42,11 @@ class Tweets():
 
         tweetIds.update([result.id for result in results if (result.author.id not in self.excluded)])
 
-        self.lastCheckedId = max(tweetIds)
+        if len(tweetIds) != 0:
+          self.lastCheckedId = max(tweetIds)
+        else:
+          if self.journal is None:
+            sys.stdout.write("STATUS: No tweets found for term", term, "at", strftime("%Y-%m-%d %H:%M:%S", localtime()), "\n")
       
       except tweepy.TweepError as e:
         if self.journal is None:
