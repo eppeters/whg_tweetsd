@@ -25,10 +25,19 @@ while True:
   for tweet in tweets.get_ids():
     try:
       result = twitter.retweet(tweet)
-      print "STATUS: Tweeted!"
+      sys.stdout.write("STATUS: Tweeted at " + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "\n")
+      sys.stdout.write("STATUS: Tweet Text: " + result.text + "\n")
+      sys.stdout.write("STATUS: Tweet ID: " + str(result.id) + "\n")
+      sys.stdout.write("STATUS: Last checked ID == " + str(tweets.lastCheckedId) + "\n")
     except tweepy.TweepError as e:
-      sys.stderr.write(str(e) + "\n")
+      sys.stderr.write("ERROR: " + str(e) + "\n")
+      try:
+        result = twitter.get_status(tweet)
+        sys.stderr.write("ERROR: Error'd tweet ID = " + str(result.id) + "\n")
+        sys.stderr.write("ERROR: Error'd tweet text = " + result.text + "\n")
+      except AttributeError as e:
+        sys.stderr.write("ERROR: " + str(e) + "\n")
 
   print "SLEEP: Sleeping for ", config['interval_secs'], " seconds at", strftime("%Y-%m-%d %H:%M:%S", localtime())
   sleep(config['interval_secs'])
-  print "SLEEP: Finished sleeping. Restarting search."
+  print "SLEEP: Finished sleeping. Restarting search at", strftime("%Y-%m-%d %H:%M:%S", localtime())
