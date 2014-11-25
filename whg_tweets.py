@@ -26,7 +26,7 @@ while True:
     try:
       result = twitter.retweet(tweet)
       sys.stdout.write("STATUS: Tweeted at " + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "\n")
-      sys.stdout.write("STATUS: Tweet Text: " + result.text + "\n")
+      sys.stdout.write("STATUS: Tweet Text: " + result.text.encode('utf8') + "\n")
       sys.stdout.write("STATUS: Tweet ID: " + str(result.id) + "\n")
       sys.stdout.write("STATUS: Last checked ID == " + str(tweets.lastCheckedId) + "\n")
     except tweepy.TweepError as e:
@@ -34,7 +34,7 @@ while True:
       try:
         result = twitter.get_status(tweet)
         sys.stderr.write("ERROR: Error'd tweet ID = " + str(result.id) + "\n")
-        sys.stderr.write("ERROR: Error'd tweet text = " + result.text + "\n")
+        sys.stderr.write("ERROR: Error'd tweet text = " + result.text.encode('utf8') + "\n")
       except AttributeError as e:
         sys.stderr.write("ERROR: " + str(e) + "\n")
 
