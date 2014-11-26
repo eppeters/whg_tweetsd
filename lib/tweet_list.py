@@ -46,7 +46,7 @@ class Tweets():
           self.lastCheckedId = max(tweetIds)
         else:
           if self.journal is None:
-            sys.stdout.write("STATUS: No tweets found for term", term, "at", strftime("%Y-%m-%d %H:%M:%S", localtime()), "\n")
+            sys.stdout.write("STATUS: No tweets found for term " + str(term) + " at " + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "\n")
       
       except tweepy.TweepError as e:
         if self.journal is None:
