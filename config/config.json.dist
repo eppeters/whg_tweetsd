@@ -1,4 +1,12 @@
 {
+  "auth": {
+    "consumer_token": "consumer_token",
+    "consumer_secret": "consumer_secret"
+  },
+  "access_token": {
+    "key": "access_token_key",
+    "secret": "access_token_secret"
+  },
   "interval_secs": 1800,
   "location": "40.069562,-80.69173",
   "last_checked_id": 527141908095963136,

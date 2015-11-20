@@ -6,12 +6,13 @@ import sys
 from lib.config_parser import Config
 from lib.tweet_list import Tweets
 
-### Twitter authorization
-auth = tweepy.OAuthHandler('GW6ygIXuDjY09UysWCWwl3SYz', 'GtidKGLHvMAXMEs2p7Vict6HE4Z2p7gAnS2P7BQisEqNYa7kuC')
-auth.set_access_token('2847055289-pn4f6qKRV2OWUoQIjyBJZu0GUyd5w0D13OB1Bl5', 'hZWi3AHudKgFrLFJ8a9dgL12ds5Bvpt6zh9ZBHvcUdBzR')
-
 ### Configuration
-config = Config('/etc/opt/whg_tweetsd/config.json').values
+CONFIG_DIR = '/etc/opt/whg_tweetsd/config.json'
+config = Config(CONFIG_DIR).values
+
+### Twitter authorization
+auth = tweepy.OAuthHandler(config['auth']['consumer_token'], config['auth']['consumer_secret'])
+auth.set_access_token(config['access_token']['key'], config['access_token']['secret'])
 
 twitter = tweepy.API(auth)
 
